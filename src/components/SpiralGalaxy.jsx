@@ -9,7 +9,6 @@ const SpiralGalaxy = ({
   armCount = 3,
   scrollProgress = 0,
 }) => {
-  // console.log('SpiralGalaxy: scrollProgress prop', scrollProgress);
   const canvasRef = useRef(null);
   const starsRef = useRef([]);
   const zoomRef = useRef(1);

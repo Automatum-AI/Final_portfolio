@@ -56,7 +56,6 @@ function App() {
 
   // Update Star Date and Time every second
   useEffect(() => {
-    console.log('Updating star date and time');
     const interval = setInterval(() => {
       setFullStarDate(getStarDate());
       setCurrentTime(getCurrentTime());
@@ -74,7 +73,6 @@ function App() {
           const docHeight = document.documentElement.scrollHeight - window.innerHeight;
           const progress = docHeight > 0 ? scrollTop / docHeight : 0;
           const clamped = Math.min(Math.max(progress, 0), 1);
-          console.log('Scroll:', { scrollTop, docHeight, progress, clamped });
           setScrollProgress(clamped);
           ticking = false;
         });
@@ -99,16 +97,47 @@ function App() {
   const experienceRef = useScrollAnimation();
   const contactRef = useScrollAnimation();
 
+
   const sectionRefs = {
     home: homeRef,
     about: aboutRef,
     skills: skillsRef,
     projects: projectsRef,
+    experience: experienceRef,
+    contact: contactRef,
   };
 
+  // Debug: print which sections are visible
+  // Debug: print the entire sectionRefs object
+  console.log('sectionRefs:', sectionRefs);
+  Object.entries(sectionRefs).forEach(([id, [ref, visible]]) => {
+    console.log('Section', id, 'visible:', visible, 'ref:', ref);
+  });
+  // Find the section whose top is closest to the top of the viewport (but not above it)
+  let currentSection = 'home';
+  let maxTop = -Infinity;
+  let firstBelow = null;
+  Object.entries(sectionRefs).forEach(([id, [ref]]) => {
+    if (ref && ref.current) {
+      const rect = ref.current.getBoundingClientRect();
+      // Debug: print bounding rect for each section
+      console.log('Section', id, 'rect.top:', rect.top);
+      if (rect.top <= 0 && rect.top > maxTop) {
+        maxTop = rect.top;
+        currentSection = id;
+      }
+      if (rect.top > 0 && firstBelow === null) {
+        firstBelow = id;
+      }
+    }
+  });
+  if (maxTop === -Infinity && firstBelow) {
+    currentSection = firstBelow;
+  }
+  console.log('Current section for NavBar (closest to top):', currentSection);
   return (
     <>
-      <NavBar />
+      <NavBar currentSection={currentSection} />
       {/* Floating star date overlay */}
       <div style={{
         position: 'fixed',
@@ -156,12 +185,10 @@ function App() {
       </div>
       {/* Background visual layers */}
       <StarField />
-      {console.log('App: scrollProgress', scrollProgress)}
-
-      {/* Page content */}
       <main className="content">
         {/* Render all sections except experience and contact */}
         {Object.entries(sectionRefs).map(([sectionId, [ref, visible]]) => {
+          if (sectionId === 'experience' || sectionId === 'contact') return null;
           const section = content[sectionId];
           return (
             <section key={sectionId} id={sectionId} style={{ minHeight: '100vh' }} ref={ref}>
@@ -183,22 +210,20 @@ function App() {
           );
         })}
         {/* Render experience section after projects */}
-        {content.experience && (
-          (() => {
-            const [ref, visible] = experienceRef;
-            return (
-              <section key="experience" id="experience" style={{ minHeight: '100vh' }} ref={ref}>
-                <div className="section-content">
-                  <h2 className={`section-title ${visible ? 'visible' : ''}`}>{content.experience.title}</h2>
-                  <p className={`section-description ${visible ? 'visible' : ''}`}>{content.experience.description}</p>
-                  <div className={`nav-card-container ${visible ? 'visible' : ''}`}>
-                    <NavCard options={content.experience.options || []} images={[]} />
-                  </div>
+        {content.experience && (() => {
+          const [ref, visible] = experienceRef;
+          return (
+            <section key="experience" id="experience" style={{ minHeight: '100vh' }} ref={ref}>
+              <div className="section-content">
+                <h2 className={`section-title ${visible ? 'visible' : ''}`}>{content.experience.title}</h2>
+                <p className={`section-description ${visible ? 'visible' : ''}`}>{content.experience.description}</p>
+                <div className={`nav-card-container ${visible ? 'visible' : ''}`}>
+                  <NavCard options={content.experience.options || []} images={[]} />
                 </div>
-              </section>
-            );
-          })()
-        )}
+              </div>
+            </section>
+          );
+        })()}
         {/* Render contact section last if it exists */}
         {content.contact && (() => {
           const [ref, visible] = contactRef;

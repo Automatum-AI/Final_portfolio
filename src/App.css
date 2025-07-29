@@ -95,7 +95,10 @@ section .footer p {
   max-width: 600px;
   width: 100%;
   word-wrap: break-word;
-  color: #ff51f9ff; 
+  color: #ff51f9ff;
+  text-shadow:
+    0 0 8px #ff51f9cc,
+    0 0 16px #a855f7cc;
 }
 
 .section-description {
@@ -183,7 +186,7 @@ section .footer p {
 }
 
 .image-card {
-  background-color: rgba(255, 255, 255, 0.05);
+  background-color: rgb(107, 12, 102);
   border-radius: 1rem;
   overflow: hidden;
   width: 200px;
@@ -226,7 +229,22 @@ section .footer p {
   color: white;
   font-weight: 500;
   font-size: 1rem;
-  transition: color 0.3s ease;
+  transition: color 0.3s, box-shadow 0.3s;
+  position: relative;
+  border-radius: 1em;
+  padding: 0.25em 1em;
+}
+
+.navbar-list li a.active {
+  color: #00eaff;
+  background: rgba(0, 234, 255, 0.13);
+  box-shadow:
+    0 0 12px #00eaffcc,
+    0 0 24px #38bdf8cc;
+  text-shadow:
+    0 0 8px #00eaffcc,
+    0 0 16px #38bdf8cc;
+  border: 1.5px solid #00eaff;
 }
 
 .navbar-list li a:hover {

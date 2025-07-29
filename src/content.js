@@ -52,19 +52,39 @@ const content = {
       {
         role: "Senior Graphic Designer",
         company: "KreditBee",
-        duration: "May 2022 – Present"
+        duration: "May 2022 - Present"
       },
       {
         role: "Senior Graphic Designer",
+        company: "Creative Head",
+        duration: "Dec 2020 - Jan 2022"
+      },
+      {
+        role: "Graphic Designer",
         company: "KreditBee",
-        duration: "May 2022 – Present"
-      }
+        duration: "Sept 2019 - Nov 2020"
+      },
+      {
+        role: "Graphic Designer",
+        company: "Trescon Global Business Solution Pvt Ltd",
+        duration: "Sept 2018 - April 2019"
+      }, 
+      {
+        role: "Graphic Designer",
+        company: "Cactus Menswear Pvt Ltd",
+        duration: "Dec 2017 - June 2018"
+      },
+      {
+        role: "Graphic Designer",
+        company: "PepperAgro",
+        duration: "May 2015 - Dec 2017"
+      }                  
     ]
   },
   skills: {
     title: "SKILLS",
     description: "",
-    options: ["Photoshop", "Illustrator", "After Effects", "Figma"    ]
+    options: ["Prompt Engineering", "Generative AI", "Photoshop", "Illustrator", "After Effects", "Figma", "Blender", "Web Design", "Brand Strategy"]
   },
   contact: {
     title: "CONTACT",
