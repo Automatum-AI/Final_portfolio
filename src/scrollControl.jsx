@@ -2,6 +2,16 @@ import { useEffect, useRef, useState } from 'react';
 
 export const scrollProgressRef = { current: 0 };
 
+export function useScrollTracking() {
+  useEffect(() => {
+    const handleScroll = () => {
+      scrollProgressRef.current = window.scrollY;
+    };
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+}
+
 // Hook to animate section on scroll (IntersectionObserver)
 export function useScrollAnimation(threshold = 0.18) {
   const ref = useRef(null);

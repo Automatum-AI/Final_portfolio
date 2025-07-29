@@ -1,18 +1,18 @@
 import './App.css'
-import SpiralGalaxy from './components/SpiralGalaxy'
-import StarField from './components/StarField'
 import content from './content'
-import { useEffect, useState, useRef, useMemo } from 'react'
+import { useEffect, useState, useRef } from 'react'
 import NavCard from './components/nav_card';
-import { useScrollAnimation } from './scrollControl';
+import { useScrollAnimation, useScrollTracking } from './scrollControl';
 import NavBar from './components/navBar';
+import { Canvas } from '@react-three/fiber'
+import CosmicScene from './components/CosmicScene'
+import BlackHoleScene from './components/BlackHoleScene';
 
 
 function getRandomCoord() {
   // Generate a random 8-digit number as a string
   return (Math.floor(Math.random() * 90000000) + 10000000).toString();
 }
-
 
 function getStarDate() {
   const now = new Date();
@@ -34,12 +34,13 @@ function getCurrentTime() {
   return `${hh}.${min}.${ss} ${ampm}`;
 }
 
-
 function App() {
   if (!content || typeof content !== 'object') {
     return <div style={{ color: 'white', padding: '2rem' }}>Loading content...</div>;
   }
+  useScrollTracking();
   const [scrollProgress, setScrollProgress] = useState(0);
+  const scrollProgressRef = useRef(0);
   const [coords, setCoords] = useState({ x: getRandomCoord(), y: getRandomCoord(), z: getRandomCoord() });
 
   // Star Date and Time states
@@ -50,7 +51,7 @@ function App() {
   useEffect(() => {
     const interval = setInterval(() => {
       setCoords({ x: getRandomCoord(), y: getRandomCoord(), z: getRandomCoord() });
-    }, 100);
+    }, 50);
     return () => clearInterval(interval);
   }, []);
 
@@ -74,6 +75,8 @@ function App() {
           const progress = docHeight > 0 ? scrollTop / docHeight : 0;
           const clamped = Math.min(Math.max(progress, 0), 1);
           setScrollProgress(clamped);
+          scrollProgressRef.current = clamped;
+          document.documentElement.style.setProperty('--scroll', clamped.toString());
           ticking = false;
         });
         ticking = true;
@@ -107,12 +110,6 @@ function App() {
     contact: contactRef,
   };
 
-  // Debug: print which sections are visible
-  // Debug: print the entire sectionRefs object
-  console.log('sectionRefs:', sectionRefs);
-  Object.entries(sectionRefs).forEach(([id, [ref, visible]]) => {
-    console.log('Section', id, 'visible:', visible, 'ref:', ref);
-  });
   // Find the section whose top is closest to the top of the viewport (but not above it)
   let currentSection = 'home';
   let maxTop = -Infinity;
@@ -121,7 +118,6 @@ function App() {
     if (ref && ref.current) {
       const rect = ref.current.getBoundingClientRect();
       // Debug: print bounding rect for each section
-      console.log('Section', id, 'rect.top:', rect.top);
       if (rect.top <= 0 && rect.top > maxTop) {
         maxTop = rect.top;
         currentSection = id;
@@ -134,9 +130,24 @@ function App() {
   if (maxTop === -Infinity && firstBelow) {
     currentSection = firstBelow;
   }
-  console.log('Current section for NavBar (closest to top):', currentSection);
+
   return (
     <>
+      <Canvas
+        style={{
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          zIndex: -1,
+          width: '100vw',
+          height: '100vh',
+          pointerEvents: 'none',
+        }}
+        camera={{ position: [0, 0, 200], fov: 75 }}
+      >
+        <CosmicScene />
+        <BlackHoleScene />
+      </Canvas>
       <NavBar currentSection={currentSection} />
       {/* Floating star date overlay */}
       <div style={{
@@ -184,7 +195,7 @@ function App() {
         <div>Z: <span style={{fontWeight: 500}}>{coords.z}</span></div>
       </div>
       {/* Background visual layers */}
-      <StarField />
+      {/* CosmicScene Canvas is rendered as a fixed background */}
       <main className="content">
         {/* Render all sections except experience and contact */}
         {Object.entries(sectionRefs).map(([sectionId, [ref, visible]]) => {
