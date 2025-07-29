@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useEffect, memo } from 'react';
 import * as THREE from 'three';
 
 const StarField = () => {
@@ -119,4 +119,4 @@ const StarField = () => {
   );
 };
 
-export default StarField;
+export default memo(StarField);

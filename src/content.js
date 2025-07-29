@@ -1,42 +1,73 @@
 // src/content.js
 
 const content = {
-  hero: {
+  home: {
     title: "BEYOND EARTH. BEYOND DESIGN.",
-    description: "Senior Graphic Designer & AI Generalist. I create stunning visuals and smart systems using design and AI.",
+    description: "Senior Graphic Designer & AI Generalist.",
     options: []
   },
   about: {
-    title: "About Me",
+    title: "CAPTAIN'S LOG",
     description: `I’m a passionate designer and technologist. I lead creative teams, design brands, and build tools that automate intelligently.`,
     options: []
   },
-  experience: {
-    title: "Experience",
-    description: "",
+  projects: {
+    title: "PROJECTS",
+    description: "A selection of my recent and impactful work.",
     options: [
       {
-        role: "Senior Graphic Designer",
-        company: "KreditBee",
-        duration: "May 2022 – Present",
+        title: "AI Portfolio Website",
+        description: "A personal portfolio built with React, Vite, and custom generative visuals.",
         details: [
-          "Led a team of 4 designers",
-          "Created marketing campaigns and visuals",
-          "Built internal design systems and workflows"
+          "Interactive spiral galaxy animation",
+          "Dynamic overlays and navigation",
+          "Minimal, glassmorphic UI"
+        ]
+      },
+      {
+        title: "Design Automation Toolkit",
+        description: "A Figma plugin and workflow for automating repetitive design tasks.",
+        details: [
+          "Batch export and resizing",
+          "Brand asset generation",
+          "AI-powered color suggestions"
+        ]
+      },
+      {
+        title: "Marketing Campaigns",
+        description: "Led and executed multi-channel campaigns for fintech and tech brands.",
+        details: [
+          "Concept to delivery for 10+ campaigns",
+          "Motion graphics and social media assets",
+          "Team leadership and client presentations"
         ]
       }
     ]
   },
-  skills: {
-    title: "Skills",
-    description: "",
+
+  experience: {
+    title: "EXPERIENCE",
+    description: "10+ years in design and 1+ years in AI.",
     options: [
-      { type: "Software", list: ["Photoshop", "Illustrator", "After Effects", "Figma"] },
-      { type: "Professional", list: ["Branding", "UI/UX", "Automation", "Team Leadership"] }
+      {
+        role: "Senior Graphic Designer",
+        company: "KreditBee",
+        duration: "May 2022 – Present"
+      },
+      {
+        role: "Senior Graphic Designer",
+        company: "KreditBee",
+        duration: "May 2022 – Present"
+      }
     ]
   },
+  skills: {
+    title: "SKILLS",
+    description: "",
+    options: ["Photoshop", "Illustrator", "After Effects", "Figma"    ]
+  },
   contact: {
-    title: "Contact",
+    title: "CONTACT",
     description: "Let’s create something futuristic together.",
     options: [
       { type: "Email", value: "captain@designs.ai" }
