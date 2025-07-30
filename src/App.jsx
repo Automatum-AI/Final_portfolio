@@ -194,8 +194,7 @@ function App() {
         <div style={{marginBottom: 1}}>Y: <span style={{fontWeight: 500}}>{coords.y}</span></div>
         <div>Z: <span style={{fontWeight: 500}}>{coords.z}</span></div>
       </div>
-      {/* Background visual layers */}
-      {/* CosmicScene Canvas is rendered as a fixed background */}
+
       <main className="content">
         {/* Render all sections except experience and contact */}
         {Object.entries(sectionRefs).map(([sectionId, [ref, visible]]) => {

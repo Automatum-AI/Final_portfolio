@@ -1,9 +1,13 @@
-import { useRef, useMemo } from 'react';
-import { useFrame } from '@react-three/fiber';
+import { useRef, useMemo, useEffect } from 'react';
+import { useFrame, useThree } from '@react-three/fiber';
 import * as THREE from 'three';
 import { scrollProgressRef } from '../scrollControl';
 
 export default function CosmicScene() {
+  const { scene } = useThree();
+  useEffect(() => {
+    scene.background = new THREE.Color(0x000000);
+  }, [scene]);
   const starRef = useRef();
 
   // Generate stars only once
