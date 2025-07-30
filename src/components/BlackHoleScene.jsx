@@ -13,7 +13,7 @@ export default function BlackHoleScene() {
 
 
   // Trail parameters
-  const starCount = 500;
+  const starCount = 9000;
   const trailLength = 30; // number of trail segments per star
   const trailFade = 0.008; // how much opacity fades per segment
 
@@ -21,7 +21,7 @@ export default function BlackHoleScene() {
   const starData = useMemo(() => {
     return Array.from({ length: starCount }, () => ({
       angle: Math.random() * Math.PI * 2,
-      radius: 20 + Math.random() * 10,
+      radius: 12 + Math.random() * 8, // tighter disk: min 12, max 20
       y: (Math.random() - 0.5) * 2,
       speed: 0.3 + Math.random() * 0.3,
     }));
@@ -92,12 +92,13 @@ export default function BlackHoleScene() {
     }
     if (groupRef.current) {
       groupRef.current.rotation.y = Math.PI / 10;
+      groupRef.current.rotation.x = Math.PI / 12; // 30 degree tilt
     }
   });
 
   return (
     <>
-      <group ref={groupRef}>
+      <group ref={groupRef} position={[20, -20, 0]}>
         {/* Black Hole Core */}
         <mesh ref={coreRef} position={[0, 0, -50]}>
           <sphereGeometry args={[10, 64, 64]} />
@@ -150,16 +151,7 @@ export default function BlackHoleScene() {
           />
         </points>
 
-        {/* Light Bending (Gravitational Lensing Ring) */}
-        <mesh position={[0, 0, -50]} rotation={[Math.PI / 2, 0, 0]}>
-          <ringGeometry args={[24, 26, 128]} />
-          <meshBasicMaterial
-            color={new THREE.Color(1, 1, 1)}
-            transparent
-            opacity={0.2}
-            side={THREE.DoubleSide}
-          />
-        </mesh>
+        {/* Light Bending (Gravitational Lensing Ring) -- removed extra disk as requested */}
 
       </group>
 
