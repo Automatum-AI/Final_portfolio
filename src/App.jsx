@@ -6,7 +6,7 @@ import { useScrollAnimation, useScrollTracking } from './scrollControl';
 import NavBar from './components/navBar';
 import { Canvas } from '@react-three/fiber'
 import CosmicScene from './components/CosmicScene'
-import BlackHoleScene from './components/BlackHoleScene';
+import NeuralSkillMap from './components/NeuralSkillMap';
 
 
 function getRandomCoord() {
@@ -146,7 +146,6 @@ function App() {
         camera={{ position: [0, 0, 200], fov: 75 }}
       >
         <CosmicScene />
-        <BlackHoleScene />
       </Canvas>
       <NavBar currentSection={currentSection} />
       {/* Floating star date overlay */}
@@ -195,6 +194,11 @@ function App() {
         <div>Z: <span style={{fontWeight: 500}}>{coords.z}</span></div>
       </div>
 
+      {currentSection === 'skills' && (
+        <div className="neural-skill-map-container visible">
+          <NeuralSkillMap visible={true} />
+        </div>
+      )}
       <main className="content">
         {/* Render all sections except experience and contact */}
         {Object.entries(sectionRefs).map(([sectionId, [ref, visible]]) => {
@@ -205,11 +209,7 @@ function App() {
               <div className="section-content">
                 <h2 className={`section-title ${visible ? 'visible' : ''}`}>{section.title}</h2>
                 <p className={`section-description ${visible ? 'visible' : ''}`}>{section.description}</p>
-                {sectionId === 'skills' && (
-                  <div className={`nav-card-container ${visible ? 'visible' : ''}`}>
-                    <NavCard options={section.options || []} images={section.images || []} />
-                  </div>
-                )}
+                {/* NeuralSkillMap moved outside the loop */}
                 {sectionId === 'projects' && (
                   <div className={`nav-card-container ${visible ? 'visible' : ''}`}>
                     <NavCard options={section.options || []} images={[]} />
