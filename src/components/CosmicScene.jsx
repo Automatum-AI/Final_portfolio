@@ -1,7 +1,7 @@
 import { useRef, useMemo, useEffect } from 'react';
 import { useFrame, useThree } from '@react-three/fiber';
 import * as THREE from 'three';
-import { scrollProgressRef } from '../scrollControl';
+import { useGlobalScroll } from '../scrollControl';
 
 export default function CosmicScene() {
   const { scene } = useThree();
@@ -9,6 +9,7 @@ export default function CosmicScene() {
     scene.background = new THREE.Color(0x000000);
   }, [scene]);
   const starRef = useRef();
+  const { progress } = useGlobalScroll();
 
   // Generate stars only once
   const stars = useMemo(() => {
@@ -34,12 +35,9 @@ export default function CosmicScene() {
   // Animate subtle movement
   useFrame(({ clock }) => {
     const t = clock.getElapsedTime();
-    const scroll = scrollProgressRef.current;
-
-
     if (starRef.current) {
       starRef.current.rotation.y = t * 0.05;
-      starRef.current.position.y = -scroll * 0.02;
+      starRef.current.position.y = -progress * 100 * 0.02; // scale progress (0-1) to match old scroll
     }
   });
 

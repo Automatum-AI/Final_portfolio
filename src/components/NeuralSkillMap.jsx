@@ -18,7 +18,7 @@ const NeuralSkillMap = ({ visible }) => {
       <svg width="800" height="800" viewBox="0 0 800 800" className="map-svg" preserveAspectRatio="xMidYMid meet">
         {/* Central Node */}
         <circle cx="400" cy="400" r="80" className="core-node" />
-        <text x="400" y="400" textAnchor="middle" className="core-label">KK</text>
+        <text x="400" y="400" textAnchor="middle" className="core-label"></text>
 
         {skills.map((skill, i) => {
           const angle = i * angleStep;
@@ -54,8 +54,8 @@ const NeuralSkillMap = ({ visible }) => {
         }
 
         .core-node {
-          fill: #ffffffcc;
-          stroke: #00ffff;
+          fill: #f0be67cc;
+          stroke: #ffa200ff;
           stroke-width: 2;
           animation: pulse 2s infinite;
         }
@@ -67,7 +67,7 @@ const NeuralSkillMap = ({ visible }) => {
         }
 
         .line {
-          stroke: #ffffff33;
+          stroke: #40a7a9ff;
           stroke-width: 1;
         }
 
@@ -79,14 +79,14 @@ const NeuralSkillMap = ({ visible }) => {
         }
 
         .skill-label {
-          fill: #ffffffaa;
+          fill: #16c9ffaa;
           font-size: 0.7rem;
           font-family: 'Orbitron', monospace;
           pointer-events: none;
         }
 
         .bobbing-skill {
-          animation: bob 2s ease-in-out infinite;
+          animation: bob 1s ease-in-out infinite;
         }
 
         @keyframes pulse {

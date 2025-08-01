@@ -1,8 +1,15 @@
 import './App.css'
+import astro from './assets/astro.webp';
 import content from './content'
 import { useEffect, useState, useRef } from 'react'
+import HomeSection from './sections/HomeSection';
+import AboutSection from './sections/AboutSection';
+import SkillsSection from './sections/SkillsSection';
+import ProjectsSection from './sections/ProjectsSection';
+import ExperienceSection from './sections/ExperienceSection';
+import ContactSection from './sections/ContactSection';
 import NavCard from './components/nav_card';
-import { useScrollAnimation, useScrollTracking } from './scrollControl';
+import { useScrollAnimation, useScrollTracking, ScrollProvider } from './scrollControl';
 import NavBar from './components/navBar';
 import { Canvas } from '@react-three/fiber'
 import CosmicScene from './components/CosmicScene'
@@ -41,6 +48,7 @@ function App() {
   useScrollTracking();
   const [scrollProgress, setScrollProgress] = useState(0);
   const scrollProgressRef = useRef(0);
+  const mainContentRef = useRef(null);
   const [coords, setCoords] = useState({ x: getRandomCoord(), y: getRandomCoord(), z: getRandomCoord() });
 
   // Star Date and Time states
@@ -132,6 +140,7 @@ function App() {
   }
 
   return (
+    <ScrollProvider scrollContainerRef={mainContentRef}>
     <>
       <Canvas
         style={{
@@ -148,6 +157,25 @@ function App() {
         <CosmicScene />
       </Canvas>
       <NavBar currentSection={currentSection} />
+
+      {/* Astro for About Section */}
+      <img
+        src={astro}
+        alt="Astro"
+        className={`astro-img ${currentSection === 'about' ? 'show' : 'hide'}`}
+        style={{
+          position: 'fixed',
+          top: '50%',
+          left: currentSection === 'about' ? '5%' : '-300px',
+          transition: 'left 1s ease, opacity 0.6s ease, transform 1s ease',
+          zIndex: 10,
+          width: '400px',
+          opacity: currentSection === 'about' ? 1 : 0,
+          transform: 'translateY(-50%)',
+          animation: currentSection === 'about' ? 'floatY 2.5s ease-in-out infinite' : 'none',
+          pointerEvents: 'none',
+        }}
+      />
       {/* Floating star date overlay */}
       <div style={{
         position: 'fixed',
@@ -199,58 +227,59 @@ function App() {
           <NeuralSkillMap visible={true} />
         </div>
       )}
-      <main className="content">
-        {/* Render all sections except experience and contact */}
-        {Object.entries(sectionRefs).map(([sectionId, [ref, visible]]) => {
-          if (sectionId === 'experience' || sectionId === 'contact') return null;
-          const section = content[sectionId];
-          return (
-            <section key={sectionId} id={sectionId} style={{ minHeight: '100vh' }} ref={ref}>
-              <div className="section-content">
-                <h2 className={`section-title ${visible ? 'visible' : ''}`}>{section.title}</h2>
-                <p className={`section-description ${visible ? 'visible' : ''}`}>{section.description}</p>
-                {/* NeuralSkillMap moved outside the loop */}
-                {sectionId === 'projects' && (
-                  <div className={`nav-card-container ${visible ? 'visible' : ''}`}>
-                    <NavCard options={section.options || []} images={[]} />
-                  </div>
-                )}
-              </div>
-            </section>
-          );
-        })}
-        {/* Render experience section after projects */}
-        {content.experience && (() => {
-          const [ref, visible] = experienceRef;
-          return (
-            <section key="experience" id="experience" style={{ minHeight: '100vh' }} ref={ref}>
-              <div className="section-content">
-                <h2 className={`section-title ${visible ? 'visible' : ''}`}>{content.experience.title}</h2>
-                <p className={`section-description ${visible ? 'visible' : ''}`}>{content.experience.description}</p>
-                <div className={`nav-card-container ${visible ? 'visible' : ''}`}>
-                  <NavCard options={content.experience.options || []} images={[]} />
-                </div>
-              </div>
-            </section>
-          );
-        })()}
-        {/* Render contact section last if it exists */}
-        {content.contact && (() => {
-          const [ref, visible] = contactRef;
-          return (
-            <section key="contact" id="contact" style={{ minHeight: '100vh' }} ref={ref}>
-              <div className="section-content">
-                <h2 className={`section-title ${visible ? 'visible' : ''}`}>{content.contact.title}</h2>
-                <p className={`section-description ${visible ? 'visible' : ''}`}>{content.contact.description}</p>
-              </div>
-            </section>
-          );
-        })()}
+      <main className="content" ref={mainContentRef}>
+
+        {/* Home Section */}
+        <HomeSection
+          ref={homeRef[0]}
+          section={content.home}
+          visible={homeRef[1]}
+          scrollProgress={scrollProgress}
+        />
+
+        {/* About Section */}
+        <AboutSection
+          ref={aboutRef[0]}
+          section={content.about}
+          visible={aboutRef[1]}
+        />
+
+        {/* Skills Section */}
+        <SkillsSection
+          ref={skillsRef[0]}
+          section={content.skills}
+          visible={skillsRef[1]}
+        />
+
+        {/* Projects Section */}
+        <ProjectsSection
+          ref={projectsRef[0]}
+          section={content.projects}
+          visible={projectsRef[1]}
+        />
+
+        {/* Experience Section */}
+        {content.experience && (
+          <ExperienceSection
+            ref={experienceRef[0]}
+            section={content.experience}
+            visible={experienceRef[1]}
+          />
+        )}
+        {/* Contact Section */}
+        {content.contact && (
+          <ContactSection
+            ref={contactRef[0]}
+            section={content.contact}
+            visible={contactRef[1]}
+          />
+        )}
       </main>
 
       {/* Optional: force scrollable height for testing */}
       <div style={{ height: '100vh' }} />
     </>
+    </ScrollProvider>
   )
 }
 

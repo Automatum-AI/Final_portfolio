@@ -90,7 +90,10 @@ const content = {
     title: "CONTACT",
     description: "Let’s create something futuristic together.",
     options: [
-      { type: "Email", value: "captain@designs.ai" }
+      { type: "Email", value: "karthikbellus@gmail.com" },
+      { type: "Phone", value: "+91 99945 42400" },
+      { type: "LinkedIn", value: "https://www.linkedin.com/in/karthikbellus" },
+      { type: "Behance", value: "https://www.behance.net/karthikbellus" }
     ]
   }
 };
