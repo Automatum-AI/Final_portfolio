@@ -1,13 +1,59 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Vite + React</title>
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.jsx"></script>
-  </body>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio | Creative Developer</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <!-- Add Inter font -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- JavaScript modules -->
+    <script type="module" src="js/main.js"></script>
+</head>
+<body>
+    <canvas id="cosmicBackground" style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: 0;"></canvas>
+    
+    <div id="floating-titles"></div>
+    
+    <nav class="navbar">
+        <div class="nav-content">
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#skills">Skills</a></li>
+                <li><a href="#projects">Projects</a></li>
+                <li><a href="#experience">Experience</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+    
+    <main>
+        <section id="home" class="section">
+            <div class="section-content"></div>
+        </section>
+
+        <section id="about" class="section">
+            <div class="section-content"></div>
+        </section>
+
+        <section id="skills" class="section">
+            <div class="section-content"></div>
+        </section>
+
+        <section id="projects" class="section">
+            <div class="section-content"></div>
+        </section>
+
+        <section id="experience" class="section">
+            <div class="section-content"></div>
+        </section>
+
+        <section id="contact" class="section">
+            <div class="section-content"></div>
+        </section>
+    </main>
+
+    <!-- No need for additional script loading as they are imported by main.js -->
+</body>
 </html>
