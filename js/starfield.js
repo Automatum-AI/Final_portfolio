@@ -13,7 +13,8 @@ class Star {
     this.depth = depth;
     // Star brightness and size based on depth
     this.brightness = 1 - this.z / depth;
-    this.size = Math.max(0.5, this.brightness * 2);
+    // Reduce star size: lower multiplier and minimum size for smaller stars
+    this.size = Math.max(0.3, this.brightness * 1);
   }
   update(speed) {
     // Move camera forward
@@ -53,12 +54,12 @@ export class StarField {
     this.width = canvas.clientWidth;
     this.height = canvas.clientHeight;
     this.depth = options.depth || 1000;
-    this.starCount = options.starCount || 400;
+    this.starCount = options.starCount || 700;
     this.speed = options.speed || 2;
     this.scrollY = 0;
     this.parallaxStrength = options.parallaxStrength || 0.5;
     this.rotation = 0;
-    this.rotationSpeed = options.rotationSpeed || 0.0005;
+    this.rotationSpeed = options.rotationSpeed || 0.0001;
     this.stars = [];
     this._bindEvents();
     this._init();

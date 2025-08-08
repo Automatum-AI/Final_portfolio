@@ -5,7 +5,9 @@
   "main": "js/main.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "npx serve -l 3000"
+    "dev": "npm run start",
+    "start": "npx serve . -l 5000",
+    "firebase:deploy": "firebase deploy --only hosting"
   },
   "repository": {
     "type": "git",

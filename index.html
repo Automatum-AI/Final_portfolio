@@ -8,6 +8,14 @@
     <!-- Add Inter font -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <!-- JavaScript modules -->
+    <!-- HUD modules: coordinates and date -->
+    <script type="module">
+        import { initCoordinates } from './js/coordinates.js';
+        import { initDate } from './js/date.js';
+        initCoordinates();
+        initDate();
+    </script>
+    <!-- Main application -->
     <script type="module" src="js/main.js"></script>
 </head>
 <body>
@@ -34,7 +42,9 @@
         </section>
 
         <section id="about" class="section">
-            <div class="section-content"></div>
+        <div class="section-content">
+            <img src="kk.webp" alt="About Image" class="about-image">
+        </div>
         </section>
 
         <section id="skills" class="section">

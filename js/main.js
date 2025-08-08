@@ -1,12 +1,16 @@
 import { BlackHoleScene } from './BlackHoleScene.js';
 import { websiteContent } from './content.js';
 import { StarField } from './starfield.js';
+import { initSkillSection } from './skills.js';
+import { initCoordinates } from './coordinates.js';
+import { initDate } from './date.js';
 
 class PortfolioApp {
     #currentSectionId;
     
     constructor() {
         this.#currentSectionId = null;
+        this.skillsInitDone = false;
         this.init();
     }
 
@@ -16,10 +20,13 @@ class PortfolioApp {
             return;
         }
         
-        // Initialize starfield
+        // Initialize HUD: coordinates and date
+        initCoordinates();
+        initDate();
+        // Initialize starfield with reduced star count for clarity
         try {
             console.log('Initializing starfield with canvas:', canvas);
-            this.starfield = new StarField(canvas);
+            this.starfield = new StarField(canvas, { starCount: 300 });
         } catch (error) {
             console.error('Failed to initialize starfield:', error);
         }
@@ -94,6 +101,12 @@ class PortfolioApp {
                     document.querySelectorAll('.section-content').forEach(c => c.classList.remove('visible'));
                     const contentEl = entry.target.querySelector('.section-content');
                     if (contentEl) contentEl.classList.add('visible');
+                    // initialize constellation on skills reveal
+                    if (sectionId === 'skills' && !this.skillsInitDone) {
+                        const skillsContainer = entry.target.querySelector('.section-content');
+                        initSkillSection(skillsContainer);
+                        this.skillsInitDone = true;
+                    }
                 }
             });
         }, observerOptions);
@@ -106,24 +119,6 @@ class PortfolioApp {
             // Update metadata
             document.title = websiteContent.siteMetadata.title;
         } catch (error) {
-        }
-        // Populate skills section with a circular orbit layout
-        const skillsContent = document.querySelector('#skills .section-content');
-        if (skillsContent && websiteContent.skills.options.length) {
-            const orbitContainer = document.createElement('div');
-            orbitContainer.className = 'skill-orbit';
-            const skills = websiteContent.skills.options;
-            const radius = 150; // distance from center in px
-            const angleStep = 360 / skills.length;
-            skills.forEach((skill, index) => {
-                const angle = angleStep * index;
-                const planet = document.createElement('div');
-                planet.className = 'skill-planet';
-                planet.textContent = skill;
-                planet.style.transform = `rotate(${angle}deg) translate(${radius}px) rotate(-${angle}deg)`;
-                orbitContainer.appendChild(planet);
-            });
-            skillsContent.appendChild(orbitContainer);
         }
     };
     

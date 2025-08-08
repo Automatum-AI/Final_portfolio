@@ -329,6 +329,34 @@ main {
 }
 /* Nebula background for skills section */
 
+/* Skill Constellation Section */
+#skills .section-content {
+    display: block;
+    width: 100%;
+    height: auto;
+    position: relative;
+    padding: 2rem 0;
+}
+#home .section-content {
+    /* Make Home content full height and relative for centering spiral */
+    position: relative;
+    height: 100vh;
+    overflow: hidden;
+    display: block;
+}
+
+.skill-tooltip {
+    position: absolute;
+    background: rgba(10, 10, 15, 0.9);
+    color: #fff;
+    padding: 0.5rem 0.75rem;
+    border-radius: 4px;
+    pointer-events: none;
+    white-space: nowrap;
+    font-size: 0.9rem;
+    z-index: 100;
+}
+
 /* Projects Section */
 .projects-grid {
     display: grid;
@@ -459,47 +487,172 @@ main {
     margin-bottom: 0.5rem;
 }
 
-/* Responsive design */
-@media (max-width: 768px) {
-    .nav-content {
-        flex-direction: column;
-        padding: 1rem;
+/* Skill Galaxy Layout */
+.skill-galaxy {
+    position: relative;
+    width: 100%;
+    height: 400px;
+    margin: 2rem auto;
+    opacity: 0;
+    transition: opacity 1s ease;
+}
+.skill-galaxy.visible {
+    opacity: 1;
+}
+.skill-planet {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 80px;
+    height: 80px;
+    margin: -40px;
+    background: radial-gradient(circle at 30% 30%, #3a4, #026);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    text-align: center;
+    padding: 0.5rem;
+    font-size: 0.9rem;
+    cursor: pointer;
+    /* initial drop offset */
+    transform: rotate(calc(360deg * var(--i) / var(--total)))
+               translateX(150px)
+               rotate(calc(-360deg * var(--i) / var(--total)))
+               translateY(-200px);
+    transition: transform 1s ease-out;
+}
+.skill-galaxy.visible .skill-planet {
+    /* drop into orbit */
+    transform: rotate(calc(360deg * var(--i) / var(--total)))
+               translateX(150px)
+               rotate(calc(-360deg * var(--i) / var(--total)))
+               translateY(0);
+}
+.skill-planet:hover {
+    transform: rotate(calc(360deg * var(--i) / var(--total)))
+               translateX(150px)
+               rotate(calc(-360deg * var(--i) / var(--total)))
+               translateY(0)
+               scale(1.1);
+    box-shadow: 0 0 15px rgba(123,157,255,0.8);
+    z-index: 10;
+}
+
+/* Skill Solar System Dashboard */
+.skill-solar-system {
+    position: relative;
+    width: 100%;
+    height: 400px;
+    margin: 2rem auto;
+    overflow: visible;
+    /* 3D perspective and tilt for orbit effect */
+    perspective: 800px;
+    transform-style: preserve-3d;
+    /* tilt the orbit plane */
+    transform: rotateX(60deg);
+}
+.solar-sun {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 100px;
+    height: 100px;
+    margin: -50px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 30% 30%, #ffd700, #ff8c00);
+    box-shadow: 0 0 30px rgba(255,200,0,0.8);
+    z-index: 5;
+}
+.solar-planet {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 40px;
+    height: 40px;
+    margin: -20px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 30% 30%, #3a4, #026);
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.65rem;
+    text-align: center;
+    cursor: pointer;
+    /* Orbit animation with random start angle */
+    transform-origin: center center;
+    animation: orbit var(--speed) linear infinite;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+ .solar-planet:hover {
+    transform: rotate(calc(360deg * var(--i) / var(--total))) translateX(var(--r)) rotate(calc(-360deg * var(--i) / var(--total))) scale(1.1);
+    box-shadow: 0 0 15px rgba(123,157,255,0.8);
+    z-index: 10;
+ }
+
+/* Orbit animation to circle sun like Milky Way */
+@keyframes orbit {
+  from {
+    transform: rotate(0deg) translateX(var(--r)) rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg) translateX(var(--r)) rotate(-360deg);
+  }
+}
+
+/* HUD Coordinates & Date Display */
+.hud-coords, .hud-date {
+    position: fixed;
+    color: #fff;
+    font-size: 0.6rem;
+    padding: 0.25rem 0.5rem;
+    background: rgba(0,0,0,0.5);
+    border-radius: 4px;
+    z-index: 1001;
+    letter-spacing: 10px;
+}
+ .hud-coords {
+    top: 30px;
+    left: 30px;
+    line-height: 1.8;
+    opacity: 0.5;
+}
+ .hud-date {
+    top: auto;
+    bottom: 10px;
+    right: 10px;
+}
+
+/* Center the spiral canvas in its container */
+/* Center spiral canvas within its container */
+.spiral-canvas {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    /* Dimensions are set via inline styles in spiral.js */
+    z-index: 1;
+}
+
+/* About Section Slide-In Image */
+.about-image {
+    position: absolute;
+    top: 50%;
+    right: -100%;
+    transform: translateY(-50%);
+    width: 300px;
+    opacity: 0;
+    animation: slide-in-right 1s ease-out forwards;
+}
+@keyframes slide-in-right {
+    0% {
+        right: -100%;
+        opacity: 0;
     }
-    
-    .nav-links {
-        flex-direction: column;
-        gap: 1rem;
-        text-align: center;
-        width: 100%;
-        padding: 1rem 0;
-        display: none;
-    }
-    
-    .nav-links.active {
-        display: flex;
-    }
-    
-    .section {
-        height: 100vh;
-        padding: 1rem;
-    }
-    
-    .section-content {
-        text-align: center;
-        padding: 1rem;
-        margin-top: 60px; /* Account for navbar on mobile */
-    }
-    .timeline::before {
-        left: 2rem;
-    }
-    
-    .timeline-item {
-        width: 100%;
-        padding-left: 4rem;
-        text-align: left;
-    }
-    
-    .timeline-item:nth-child(even) {
-        left: 0;
+    100% {
+        right: 10%;
+        opacity: 1;
     }
 }

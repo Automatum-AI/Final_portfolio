@@ -15,12 +15,12 @@ export const websiteContent = {
         ]
     },
     about: {
-        title: "CAPTAIN'S LOG",
+        title: "CAPTAIN'S LOG.",
         description: "I'm a passionate designer and technologist. I lead creative teams, design brands, and build tools that automate intelligently.",
         options: []
     },
     projects: {
-        title: "PROJECTS",
+        title: "PROJECTS.",
         description: "A selection of my recent and impactful work.",
         options: [
             {
@@ -44,12 +44,12 @@ export const websiteContent = {
         ]
     },
     skills: {
-        title: "SKILLS",
+        title: "SKILLS.",
         description: "",
         options: ["Prompt Engineering", "Generative AI", "Photoshop", "Illustrator", "After Effects", "Figma", "Blender", "Web Design", "Brand Strategy"]
     },
     experience: {
-        title: "EXPERIENCE",
+        title: "EXPERIENCE.",
         description: "10+ years in design and 1+ years in AI.",
         options: [
             {
@@ -70,7 +70,7 @@ export const websiteContent = {
         ]
     },
     contact: {
-        title: "CONTACT",
+        title: "CONTACT.",
         description: "Let's create something futuristic together.",
         options: [
             { type: "Email", value: "karthikbellus@gmail.com" },
